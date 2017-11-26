@@ -18,11 +18,11 @@ const logger = createLogger({
 })
 
 /* eslint no-useless-call: 0 */
-console.log = (...args) => logger.info.call(logger, ...args)
-console.info = (...args) => logger.info.call(logger, ...args)
-console.warn = (...args) => logger.warn.call(logger, ...args)
-console.error = (...args) => logger.error.call(logger, ...args)
-console.debug = (...args) => logger.debug.call(logger, ...args)
+console.log = (...args) => { return args[0] !== undefined ? logger.info.call(logger, ...args) : logger.info.call(logger, ['undefined']) }
+console.info = (...args) => { return args[0] !== undefined ? logger.info.call(logger, ...args) : logger.info.call(logger, ['undefined']) }
+console.warn = (...args) => { return args[0] !== undefined ? logger.warn.call(logger, ...args) : logger.info.warn(logger, ['undefined']) }
+console.error = (...args) => { return args[0] !== undefined ? logger.error.call(logger, ...args) : logger.info.error(logger, ['undefined']) }
+console.debug = (...args) => { return args[0] !== undefined ? logger.debug.call(logger, ...args) : logger.debug.error(logger, ['undefined']) }
 
 module.exports = function () {
 }
