@@ -1,3 +1,4 @@
+// Not being used 'yet', but should be.
 class User {
   constructor (accountId, channelId, activated, activationCode) {
     this.accountId = accountId
