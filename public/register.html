@@ -16,14 +16,14 @@
 </head>
 
 <body>
-  <div class="container-flex py-4">
+  <div class="container py-4">
     <div class="row py-2">
       <div class="col-12 text-center">
         <h1>Register</h1>
       </div>
     </div>
     <div class="row">
-      <div class="col-2 px-5 py-4"><a href='/'>Back home</a></div>
+      <div class="col-2 py-4"><a href='/'>Back home</a></div>
       <div class="col-4 py-4">
         This is nothing fancy. But it should do the work. It basically use a form, send the content to an endpoint (local) and then
         saves it into a CSV file used as a simple database. It will then give an authentication code to be used with the
@@ -48,6 +48,13 @@
           </div>
           <br>
           <button id="addUser" type="button" onclick="addMyUser()" class="btn btn-primary">Add</button>
+          <br><br>
+          <div id="success" class="alert alert-success" style="display:none">
+            <strong>Success!</strong>            
+          </div>
+          <div id="error" class="alert alert-error" style="display:none">
+            <strong>Error happened, look at the console!</strong>            
+          </div>
         </form>
       </div>
       <div class="col-2" />
@@ -63,9 +70,13 @@
           userName: $('#user').val(),
           channel: $('#channel').val()
         })
-        .fail(err => { console.log(err)})
+        .fail(err => { 
+          $('#error').show().fadeOut(2000)
+          console.log(err)
+        })
         .done(data => {
           console.log(data)
+          $('#success').show().fadeOut(2000)
         })
     }
 
