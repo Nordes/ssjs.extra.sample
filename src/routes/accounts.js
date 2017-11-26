@@ -15,11 +15,17 @@ var controller = (app) => {
     })
   })
   
-  router.get('/:userId', (req, res, next) => {
+  router.get('/:id', (req, res, next) => {
     // Todo Returns the details of the account
-    res.json({ userId: req.params.userId })
-
-    next()
+    app.dbContext.accounts.get(req.params.id).then(data => {
+      var account = filterElt(data, ['activationCode'])
+      res.json(account)
+      next()
+    }).catch(err => {
+      console.error(`Error while inserting: ${err}`)
+      res.error(err)
+      next()
+    })
   })
 
   return router
@@ -28,20 +34,26 @@ var controller = (app) => {
 function cloneArray(data, keysToSkip) {
   var result = []
   data.forEach(function(elt) {
-    var eltKeys = Object.keys(elt)
-    var tmp = {}
-
-    for (var i=0; i<eltKeys.length; i++) {
-      if (keysToSkip.findIndex(f=> { return f === eltKeys[i] }) >= 0) {
-        continue
-      }
-
-      tmp[eltKeys[i]] = elt[eltKeys[i]]
-    }
+    var tmp = filterElt(elt, keysToSkip)
     result.push(tmp)
   }, this)
 
   return result
+}
+
+function filterElt(elt, keysToSkip) {
+  var eltKeys = Object.keys(elt)
+  tmp = {}
+  
+  for (var i=0; i<eltKeys.length; i++) {
+    if (keysToSkip.findIndex(f=> { return f === eltKeys[i] }) >= 0) {
+      continue
+    }
+
+    tmp[eltKeys[i]] = elt[eltKeys[i]]
+  }
+
+  return tmp
 }
 
 module.exports.controller = controller
