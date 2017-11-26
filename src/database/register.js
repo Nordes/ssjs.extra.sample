@@ -26,9 +26,9 @@ var register = (dataPath) => {
     getAll: function () {
       return new Promise((resolve, reject) => {
         // https://github.com/sspringer82/nodeCsvDb
-        throw new Error('Not implemented')
-        // Need to search
-        resolve(null)
+        csvDb.get().then(
+          (data) => { resolve(data) },
+          (err) => { reject(err) })
       })
     },
     get: function (id) {

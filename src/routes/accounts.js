@@ -4,8 +4,15 @@ var router = Router()
 var controller = (app) => {
   router.get('/', (req, res, next) => {
     // todo Return the list of all the accounts
-    res.json({ok:'sometimes'})
-    next()
+    app.dbContext.register.getAll().then(data => {
+      var accounts = cloneArray(data, ['activationCode'])
+      res.json(accounts)
+      next()
+    }).catch(err => {
+      console.error(`Error while inserting: ${err}`)
+      res.error(err)
+      next()
+    })
   })
   
   router.get('/:userId', (req, res, next) => {
@@ -16,6 +23,25 @@ var controller = (app) => {
   })
 
   return router
+}
+
+function cloneArray(data, keysToSkip) {
+  var result = []
+  data.forEach(function(elt) {
+    var eltKeys = Object.keys(elt)
+    var tmp = {}
+
+    for (var i=0; i<eltKeys.length; i++) {
+      if (keysToSkip.findIndex(f=> { return f === eltKeys[i] }) >= 0) {
+        continue
+      }
+
+      tmp[eltKeys[i]] = elt[eltKeys[i]]
+    }
+    result.push(tmp)
+  }, this)
+
+  return result
 }
 
 module.exports.controller = controller

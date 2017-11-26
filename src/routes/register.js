@@ -3,13 +3,6 @@ const uuidv4 = require('uuid/v4');
 var router = Router()
 
 var controller = (app) => {
-  // create
-  router.put('/', (req, res, next) => {
-    res.json({doSomething: 'yes I should'})
-
-    next()
-  })
-
   // create/update (Should not exists in our case, but.. whatever)
   router.post('/', (req, res, next) => {
 
@@ -33,7 +26,9 @@ var controller = (app) => {
   })
 
   router.post('/activate', (req, res, next) => {
-    if (!req.query.code) {
+    if (!req.query.id) {
+      res.error("Missing the id (I know, shouldn't be there, but usefull for now)")
+    } else if (!req.query.code) {
       res.error("Missing the code")
     }
 
