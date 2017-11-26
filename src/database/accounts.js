@@ -1,7 +1,7 @@
 const CsvDb = require('csv-db')
 const path = require('path')
 
-var register = (dataPath) => {
+var accounts = (dataPath) => {
   console.debug(`Path to account file: ${path.resolve(dataPath, 'account.csv')}`)
   const csvDb = new CsvDb(path.resolve(dataPath, 'account.csv')) //, ['id', 'accountId', 'channelId', 'activated', 'activationCode']);
 
@@ -42,4 +42,4 @@ var register = (dataPath) => {
   }
 }
 
-module.exports = register
+module.exports = accounts

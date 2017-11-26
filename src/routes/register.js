@@ -13,7 +13,7 @@ var controller = (app) => {
       'active': false, // Activated using the chatbot
       'activationCode': uuidv4()
     }
-    app.dbContext.register.add(account).then(data => {
+    app.dbContext.accounts.add(account).then(data => {
       console.debug(`Post Complete, new Id: ${data}`)
       account.id = data
       res.json(account)

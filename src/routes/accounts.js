@@ -4,7 +4,7 @@ var router = Router()
 var controller = (app) => {
   router.get('/', (req, res, next) => {
     // todo Return the list of all the accounts
-    app.dbContext.register.getAll().then(data => {
+    app.dbContext.accounts.getAll().then(data => {
       var accounts = cloneArray(data, ['activationCode'])
       res.json(accounts)
       next()
