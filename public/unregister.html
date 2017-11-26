@@ -1,0 +1,75 @@
+<html>
+
+<head>
+  <meta name="robots" content="noarchive" />
+  <meta name="robots" content="no-archive" />
+  <meta name="robots" content="no archive" />
+  <meta name="Author" content="Nordes Menard-Lamarre" />
+  <title>UnRegister an account</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb"
+    crossorigin="anonymous">
+  <style>
+    .border-left-1 {
+      border-left: 1px #ccc solid;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container-flex py-4">
+    <div class="row py-2">
+      <div class="col-12 text-center">
+        <h1><u>Un</u>Register</h1>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-2 px-5 py-4">
+        <a href='/'>Back home</a>
+      </div>
+      <div class="col-4 py-4">
+        Not implemented ;) Enjoy
+      </div>
+      <div class="col-4 border-left-1 py-4">
+        <form action="javascript:void(0);">
+          <div class="form-group">
+            <input type="text" class="form-control" id="user" aria-describedby="userHelp" placeholder="User Name">
+            <small id="userHelp" class="form-text text-muted">User that will be used in the back channel.</small>
+          </div>
+          <div class="form-group">
+            <select id="channel" class="form-control" aria-describedby="channelHelp">
+              <option value="skype">Skype</option>
+              <option value="Webchat">WebChat</option>
+              <option value="unknown">unknown</option>
+            </select>
+            <small id="channelHelp" class="form-text text-muted">Channel used.</small>
+          </div>
+          <br>
+          <button id="removeUser" type="button" onclick="removeMyUser()" class="btn btn-primary">Remove</button>
+        </form>
+      </div>
+      <div class="col-2" />
+    </div>
+  </div>
+  <script src="https://code.jquery.com/jquery-3.2.1.min.js" crossorigin="anonymous"></script>
+  <script src="https://cdn.bootcss.com/popper.js/1.13.0/umd/popper.js" crossorigin="anonymous"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ"
+    crossorigin="anonymous"></script>
+  <script>
+    function removeMyUser() {
+      $.post("./api/unregister", {
+        userName: $('#user').val(),
+        channel: $('#channel').val()
+      })
+        .fail(err => { console.log(err) })
+        .done(data => {
+          console.log(data)
+        })
+    }
+
+    function success(data) {
+      console.log(data)
+    }
+  </script>
+</body>
+
+</html>
